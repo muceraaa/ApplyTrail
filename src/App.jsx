@@ -552,22 +552,25 @@ function App() {
         if (window.__pdfjsLib) {
           setExtractionInfo((prev) => ({
             ...prev,
-            parserLibrary: prev.parserLibrary || 'pdfjs-dist@3.11.174 (local)',
-            workerSrc: prev.workerSrc || 'pdfjs-dist/build/pdf.worker.min.js'
+            parserLibrary: prev.parserLibrary || 'pdfjs-dist@5.5.207 (local)',
+            workerSrc: prev.workerSrc || prev.workerSrc
           }))
           return window.__pdfjsLib
         }
 
         // Import from bundled dependency so we are offline-safe
-        const mod = await import('pdfjs-dist')
-        const workerSrcUrl = new URL('pdfjs-dist/build/pdf.worker.min.js', import.meta.url).toString()
+        const [mod, workerSrcModule] = await Promise.all([
+          import('pdfjs-dist'),
+          import('pdfjs-dist/build/pdf.worker.min.mjs?url')
+        ])
+        const workerSrcUrl = workerSrcModule.default
         mod.GlobalWorkerOptions.workerSrc = workerSrcUrl
         logStep(`PDF.js worker set: ${workerSrcUrl}`)
 
         window.__pdfjsLib = mod
         setExtractionInfo((prev) => ({
           ...prev,
-          parserLibrary: 'pdfjs-dist@3.11.174 (local)',
+          parserLibrary: 'pdfjs-dist@5.5.207 (local)',
           workerSrc: workerSrcUrl
         }))
         logStep('PDF.js loaded locally')
