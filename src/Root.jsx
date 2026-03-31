@@ -6,6 +6,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import { AuthProvider } from './context/AuthContext'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+import Tracker from './pages/Tracker'
 
 const Root = () => (
   <AuthProvider>
@@ -19,7 +20,7 @@ const Root = () => (
           path="/tracker"
           element={
             <ProtectedRoute>
-              <App />
+              <Tracker />
             </ProtectedRoute>
           }
         />

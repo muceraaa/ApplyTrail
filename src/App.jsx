@@ -1,6 +1,8 @@
 ﻿import { useEffect, useMemo, useState } from 'react'
 // pdfjs module will be loaded dynamically when needed
 import './App.css'
+import TrackModal from './components/TrackModal'
+import { addApplication } from './utils/trackerStorage'
 
 // Kenya-based placeholder tech jobs
 const jobsData = [
@@ -412,6 +414,8 @@ function App() {
     error: '',
     steps: []
   })
+  const [trackModalOpen, setTrackModalOpen] = useState(false)
+  const [trackDraft, setTrackDraft] = useState(null)
 
   useEffect(() => {
     if (cvPanelOpen) {
@@ -480,6 +484,29 @@ function App() {
   const handleApplyNow = (url) => {
     window.open(url, '_blank', 'noopener,noreferrer')
   }
+
+  const handleTrackApplication = (job) => {
+    if (!job) return
+    setTrackDraft({
+      jobTitle: job.title,
+      company: job.company,
+      jobId: job.id
+    })
+    setTrackModalOpen(true)
+  }
+
+  const handleTrackSave = (payload) => {
+    const data = {
+      ...payload,
+      jobTitle: payload.jobTitle || trackDraft?.jobTitle,
+      company: payload.company || trackDraft?.company,
+      jobId: payload.jobId ?? trackDraft?.jobId
+    }
+    addApplication(data)
+    setTrackModalOpen(false)
+  }
+
+  const handleCloseTrackModal = () => setTrackModalOpen(false)
 
   const handleOpenCvPanel = () => {
     if (!selectedJob) return
@@ -1060,14 +1087,24 @@ function App() {
                 <button className="primary" onClick={handleOpenCvPanel}>
                   Check CV Fit
                 </button>
+                <button className="ghost" onClick={() => handleTrackApplication(selectedJob)}>
+                  Track Application
+                </button>
               </div>
             </div>
           </section>
         )}
       </main>
 
+      <TrackModal
+        open={trackModalOpen}
+        onClose={handleCloseTrackModal}
+        onSave={handleTrackSave}
+        defaultValues={trackDraft}
+      />
+
       <footer className="footer">
-        <p>� 2026 ApplyTrail</p>
+        <p>(c) 2026 ApplyTrail</p>
       </footer>
 
       {/* CV Match side panel */}
