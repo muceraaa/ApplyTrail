@@ -367,6 +367,46 @@ const jobsData = [
       'Troubleshooting mindset and clear documentation'
     ],
     applicationLink: 'https://example.com/jobs/network-engineer'
+  },
+  {
+    id: 19,
+    title: 'Technical Writer',
+    company: 'Apex Kenya Tech',
+    location: 'Remote - Kenya',
+    shortDescription: 'Create clear docs that help teams ship and support products.',
+    shortSummary:
+      'Own API and product documentation, craft tutorials, and keep knowledge bases current.',
+    responsibilities: [
+      'Write and maintain API and product documentation',
+      'Produce quickstart guides and release notes',
+      'Collaborate with engineers and support on accuracy'
+    ],
+    requirements: [
+      'Excellent written communication',
+      'Experience documenting software products or APIs',
+      'Ability to learn technical domains quickly'
+    ],
+    applicationLink: 'https://example.com/jobs/technical-writer'
+  },
+  {
+    id: 20,
+    title: 'Scrum Master',
+    company: 'Savannah Tech',
+    location: 'Hybrid - Nairobi',
+    shortDescription: 'Facilitate agile ceremonies and unblock delivery teams.',
+    shortSummary:
+      'Coach teams on agile practices, track progress, and remove impediments to keep sprints on target.',
+    responsibilities: [
+      'Run daily standups, sprint planning, and retros',
+      'Track sprint health and manage team blockers',
+      'Partner with product and engineering leads on priorities'
+    ],
+    requirements: [
+      'Hands-on experience as a Scrum Master',
+      'Strong communication and facilitation skills',
+      'Familiarity with Jira or similar tools'
+    ],
+    applicationLink: 'https://example.com/jobs/scrum-master'
   }
 ]
 
@@ -1087,7 +1127,7 @@ function App() {
                 <button className="primary" onClick={handleOpenCvPanel}>
                   Check CV Fit
                 </button>
-                <button className="ghost" onClick={() => handleTrackApplication(selectedJob)}>
+                <button className="primary" onClick={() => handleTrackApplication(selectedJob)}>
                   Track Application
                 </button>
               </div>
@@ -1104,15 +1144,22 @@ function App() {
       />
 
       <footer className="footer">
-        <p>(c) 2026 ApplyTrail</p>
+        <p>© 2026 ApplyTrail</p>
       </footer>
 
       {/* CV Match side panel */}
       <div className={`sidepanel-overlay ${cvPanelOpen ? 'is-open' : ''}`} onClick={handleCloseCvPanel} />
       <aside className={`sidepanel ${cvPanelOpen ? 'is-open' : ''}`} aria-label="CV match panel">
         <div className="sidepanel__header">
-          <h2>CV Match{selectedJob ? ` � ${selectedJob.title}` : ''}</h2>
-          <button className="sidepanel__close" onClick={handleCloseCvPanel}>?</button>
+          <h2>CV Match{selectedJob ? ` - ${selectedJob.title}` : ''}</h2>
+          <button
+            type="button"
+            className="sidepanel__close"
+            onClick={handleCloseCvPanel}
+            aria-label="Close CV panel"
+          >
+            X
+          </button>
         </div>
         <div className="sidepanel__body">
           <div className="sidepanel__section">
@@ -1314,6 +1361,4 @@ function App() {
 }
 
 export default App
-
-
 

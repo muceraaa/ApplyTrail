@@ -111,10 +111,8 @@ const Tracker = () => {
   return (
     <div className="tracker-page">
       <header className="tracker__header">
-        <div>
-          <p className="auth-eyebrow">Application Tracker</p>
-          <h1 className="tracker__title">Stay on top of your pipeline</h1>
-          <p className="tracker__subtitle">Track stages, notes, and a quick timeline for each job.</p>
+        <div className="tracker__heading">
+          <h1>Application Tracker</h1>
         </div>
         <form className="tracker__add" onSubmit={handleManualAdd}>
           <input
